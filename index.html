@@ -1,3 +1,4 @@
+
 ```html
 <!DOCTYPE html>
 <html lang="en">
@@ -6,33 +7,70 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Camera Access App</title>
     <style>
-        body { font-family: Arial, sans-serif; }
-        #video { width: 100%; max-width: 600px; margin-top: 20px; }
-        .hidden { display: none; }
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #6b73ff, #000dff);
+            color: white;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+        h1, h2 {
+            margin: 20px 0;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+        .hidden {
+            display: none;
+        }
+        #video {
+            width: 100%;
+            max-width: 600px;
+            margin-top: 20px;
+            border: 2px solid white;
+            background: black;
+        }
+        .live-stream {
+            font-size: 2em;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 10px 20px;
+            border-radius: 10px;
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
     </style>
 </head>
 <body>
-    <h1>Camera Access App</h1>
-    <div>
-        <button onclick="chooseRole('user')">User</button>
-        <button onclick="chooseRole('admin')">Administrator</button>
-    </div>
+    <div class="container">
+        <h1>Camera Access App</h1>
+        <div>
+            <button onclick="chooseRole('user')">User</button>
+            <button onclick="chooseRole('admin')">Administrator</button>
+        </div>
 
-    <div id="login" class="hidden">
-        <h2>Login</h2>
-        <input type="password" id="adminPassword" placeholder="Enter password">
-        <button onclick="login()">Login</button>
-    </div>
+        <div id="login" class="hidden">
+            <h2>Login</h2>
+            <input type="password" id="adminPassword" placeholder="Enter password">
+            <button onclick="login()">Login</button>
+        </div>
 
-    <div id="userAgreement" class="hidden">
-        <h2>Camera Access Request</h2>
-        <p>Please allow camera access to proceed.</p>
-        <button onclick="startCamera()">Allow Camera</button>
-    </div>
+        <div id="userAgreement" class="hidden">
+            <h2>Camera Access Request</h2>
+            <p>Please allow camera access to proceed.</p>
+            <button onclick="startCamera()">Allow Camera</button>
+        </div>
 
-    <div id="cameraFeed" class="hidden">
-        <h2>Camera Feed</h2>
-        <video id="video" autoplay></video>
+        <div id="cameraFeed" class="hidden">
+            <h2>Live Stream</h2>
+            <video id="video" autoplay playsinline muted></video>
+        </div>
     </div>
 
     <script>
