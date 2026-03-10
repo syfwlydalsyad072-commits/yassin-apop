@@ -1,0 +1,83 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Camera Access App</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        #video { width: 100%; max-width: 600px; margin-top: 20px; }
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+    <h1>Camera Access App</h1>
+    <div>
+        <button onclick="chooseRole('user')">User</button>
+        <button onclick="chooseRole('admin')">Administrator</button>
+    </div>
+
+    <div id="login" class="hidden">
+        <h2>Login</h2>
+        <input type="password" id="adminPassword" placeholder="Enter password">
+        <button onclick="login()">Login</button>
+    </div>
+
+    <div id="userAgreement" class="hidden">
+        <h2>Camera Access Request</h2>
+        <p>Please allow camera access to proceed.</p>
+        <button onclick="startCamera()">Allow Camera</button>
+    </div>
+
+    <div id="cameraFeed" class="hidden">
+        <h2>Camera Feed</h2>
+        <video id="video" autoplay></video>
+    </div>
+
+    <script>
+        let isAdmin = false;
+
+        function chooseRole(role) {
+            if (role === 'admin') {
+                document.getElementById('login').classList.remove('hidden');
+            } else {
+                document.getElementById('userAgreement').classList.remove('hidden');
+            }
+        }
+
+        function login() {
+            const password = document.getElementById('adminPassword').value;
+            if (password === '1111') {
+                isAdmin = true;
+                alert('Login successful!');
+                document.getElementById('userAgreement').classList.remove('hidden');
+                document.getElementById('login').classList.add('hidden');
+            } else {
+                alert('Incorrect password!');
+            }
+        }
+
+        function startCamera() {
+            if (isAdmin) {
+                alert('Administrator accessing camera feed.');
+            }
+
+            document.getElementById('cameraFeed').classList.remove('hidden');
+            document.getElementById('userAgreement').classList.add('hidden');
+
+            navigator.mediaDevices.getUserMedia({ video: true })
+                .then(stream => {
+                    const video = document.getElementById('video');
+                    video.srcObject = stream;
+                    video.play();
+                })
+                .catch(error => {
+                    console.error('Error accessing camera:', error);
+                    alert('Error accessing camera: ' + error.message);
+                });
+        }
+    </script>
+</body>
+</html>
+```
